@@ -1,0 +1,111 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="my-timecolumn.html">
+<link rel="import" href="my-tableside.html">
+<link rel="import" href="my-tabletop.html">
+
+<dom-module id="my-timetable">
+  <template>
+    <my-tabletop></my-tabletop>
+    <my-tableside rows="250"></my-tableside>
+    <template is="dom-repeat" items="[[items]]">
+      <my-timecolumn on-slot-selected="handleSelect" items="[[item]]"></my-timecolumn>
+    </template>
+  </template>
+
+  <script>
+    class MyTimetable extends Polymer.Element {
+      static get is() { return 'my-timetable'; }
+
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: [
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Koli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Poli' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and MMMM' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and MMMM' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' }, { startTime: 10293809284, tableNumber: 1, description: 'SSSS and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and KKKK' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'IIII and Tero' },
+              ],
+              [
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and Tero' },
+                { startTime: 10293809284, tableNumber: 1, description: 'Olli and MMMM' },
+              ]
+            ]
+          }
+        }
+      }
+
+      handleSelect(e) {
+        console.log(e.detail)
+      }
+    }
+
+
+    window.customElements.define(MyTimetable.is, MyTimetable);
+  </script>
+</dom-module>

@@ -9,9 +9,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<script src="./timetable.js/dist/scripts/timetable.js"></script>
-
-<link rel="stylesheet" href="./timetable.js/dist/styles/timetablejs.css">
 
 <dom-module id="my-view2">
   <template>
@@ -23,20 +20,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyView2 extends Polymer.Element {
       static get is() { return 'my-view2'; }
-
-      ready() {
-        super.ready()
-
-        const timetable = new Timetable();
-        timetable.setScope(9, 17);
-
-        timetable.addLocations(['Silent Disco', 'Nile', 'Len Room', 'Maas Room']);
-
-        timetable.addEvent('Frankadelic', 'Nile', new Date(2015, 7, 17, 10, 45), new Date(2015, 7, 17, 12, 30));
-
-        const renderer = new Timetable.Renderer(timetable);
-        renderer.draw(this.$.timetable);
-      }
     }
 
     window.customElements.define(MyView2.is, MyView2);

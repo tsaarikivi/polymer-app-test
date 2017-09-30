@@ -1,0 +1,43 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="my-timeslot.html">
+
+<dom-module id="my-timecolumn">
+  <template>
+
+    <style>
+       :host {
+        display: inline-block;
+        vertical-align: top;
+        width: 240px;
+        height: 100%;
+        margin-top: 4px;
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[items]]">
+      <my-timeslot on-slot-selected="handleSelect" item="[[item]]"></my-timeslot>
+    </template>
+
+  </template>
+
+  <script>
+    class MyTimecolumn extends Polymer.Element {
+      static get is() { return 'my-timecolumn'; }
+
+      static get properties() {
+        return {
+          items: {
+            type: Array
+          }
+        }
+      }
+
+      handleSelect(e) {
+        this.dispatchEvent(new CustomEvent('slot-selected', { detail: e.detail }))
+      }
+    }
+
+
+    window.customElements.define(MyTimecolumn.is, MyTimecolumn);
+  </script>
+</dom-module>

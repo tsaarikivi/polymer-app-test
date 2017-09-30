@@ -1,0 +1,27 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-tabletop">
+  <template>
+    <style>
+       :host {
+        display: block;
+        background-color: #040404;
+        color: #FAFAFA;
+        width: 3000px;
+        height: 50px;
+      }
+    </style>
+
+    <div></div>
+
+  </template>
+
+  <script>
+    class MyTabletop extends Polymer.Element {
+      static get is() { return 'my-tabletop'; }
+    }
+
+
+    window.customElements.define(MyTabletop.is, MyTabletop);
+  </script>
+</dom-module>

@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="my-tableside">
+  <template>
+    <style>
+       :host {
+        display: inline-block;
+        vertical-align: top;
+        width: 100px;
+        background-color: #040404;
+        color: #FAFAFA;
+      }
+
+       :host div {
+        text-align: center;
+        height: 35px;
+        padding-top: 8px;
+        box-sizing: border-box;
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[items]]">
+      <div>
+        [[item]]
+      </div>
+    </template>
+
+  </template>
+
+  <script>
+    class MyTableside extends Polymer.Element {
+      static get is() { return 'my-tableside'; }
+
+      static get properties() {
+        return {
+          rows: {
+            type: Number
+          },
+          items: {
+            type: Array,
+            computed: '_computeItems(rows)'
+          }
+        }
+      }
+
+      _computeItems(rows) {
+        return Array
+          .apply(null, {
+            length: this.rows
+          })
+          .map((_, i) => i + 1)
+      }
+    }
+
+
+    window.customElements.define(MyTableside.is, MyTableside);
+  </script>
+</dom-module>
