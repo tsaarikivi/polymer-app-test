@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<dom-module id="my-emmental-item">
+
+  <template>
+    <style is="custom-style">
+      paper-card {
+        width: 200px;
+        height: 150px;
+        margin: 6px;
+      }
+    </style>
+
+    <paper-card on-click="handleClick">
+      <div class="card-content">
+        <tero-cmptest on-selected="handleSelected" first="tero"></tero-cmptest>
+        <my-kunno first="tero"></my-kunno>
+      </div>
+    </paper-card>
+  </template>
+
+  <script>
+    class MyEmmentalItem extends Polymer.Element {
+      static get is() { return 'my-emmental-item'; }
+
+      static get properties() {
+        return {
+          title: {
+            type: String
+          },
+          id: {
+            type: String
+          }
+        };
+      }
+
+      handleSelected(e) {
+        console.log(e.detail)
+      }
+
+      handleClick(e) {
+        this.dispatchEvent(new CustomEvent('emmental-selected', { detail: this.id }))
+      }
+    }
+
+    window.customElements.define(MyEmmentalItem.is, MyEmmentalItem);
+  </script>
+</dom-module>

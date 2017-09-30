@@ -1,0 +1,88 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="my-emmental-item.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-emmental">
+  <template>
+    <style include="shared-styles">
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      paper-card {
+        margin-bottom: 24px;
+        animation-name: fade-in;
+        animation-duration: 1s;
+        max-width: 300px;
+        vertical-align: top;
+        display: inline-block;
+      }
+
+      .card-header {
+        font-size: 22px;
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+      }
+
+      .card-description {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+      }
+
+      .emmental-content {
+        width: 100%;
+        overflow: scroll;
+      }
+
+      .emmental-container {
+        width: 3000px;
+      }
+    </style>
+
+    <div class="emmental-content">
+      <div class="emmental-container">
+        <template is="dom-repeat" items="[[items]]">
+          <my-emmental-item on-emmental-selected="handleSelect" id="[[index]]"></my-emmental-item>
+        </template>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class MyEmmental extends Polymer.Element {
+      static get is() { return 'my-emmental'; }
+
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: () => {
+              const ret = []
+              for (let i = 0; i < 250; i++) {
+                ret.push({
+                  shopTitle: 1
+                })
+              }
+              return ret
+            }
+          }
+        };
+      }
+
+      handleSelect(e) {
+        this.set(`items.${e.detail}.selected`, true)
+      }
+    }
+
+
+    window.customElements.define(MyEmmental.is, MyEmmental);
+  </script>
+</dom-module>
