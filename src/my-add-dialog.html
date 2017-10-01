@@ -34,14 +34,13 @@
             }
 
             .error-input {
-                color: red;
                 border-bottom: 2px solid #E31616;
             }
         </style>
 
         <paper-dialog on-iron-overlay-closed="onClose" opened="[[open]]">
 
-            <h2>Add a new event</h2>
+            <h2>Set event</h2>
             <iron-form id="event-form">
                 <form>
                     <iron-input bind-value={{title}}>
@@ -70,8 +69,12 @@
             static get is() { return 'my-add-dialog'; }
             static get properties() {
                 return {
+                    item: {
+                        type: Object,
+                        observer: 'handleItem'
+                    },
                     open: {
-                        type: Boolean
+                        type: Boolean,
                     },
                     title: {
                         type: String
@@ -82,8 +85,25 @@
                 }
             }
 
+            constructor() {
+                super();
+
+            }
+
             onClose(event) {
                 this.dispatchEvent(new CustomEvent('close'))
+            }
+
+            handleItem() {
+                // Check if there is already an event
+                console.log("handling item", item)
+                if (typeof item !== "undefined") {
+                    //if (this.open) {
+                    console.log("has event");
+                    this.title = (item.title !== "") ? item.title : "";
+                    this.note = (item.note !== "") ? item.note : "";
+                    //}
+                }
             }
 
             handleFormSubmit() {
@@ -93,6 +113,8 @@
                 }
                 else {
                     this.dispatchEvent(new CustomEvent("add", { detail: { title: this.title, note: this.note } }))
+                    this.set("title", "");
+                    this.set("note", "");
                 }
 
             }

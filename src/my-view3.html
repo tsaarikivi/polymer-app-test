@@ -15,7 +15,7 @@
 
     <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]">
     </my-timetable>
-    <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open="[[addDialogOpen]]"></my-add-dialog>
+    <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open="[[addDialogOpen]]" item="[[selectedItem]]"></my-add-dialog>
     <my-dial selected-item="[[selectedItem]]" is-in-move-mode="[[isInMoveMode]]" on-click-add="handleClickAdd" on-click-edit="handleClickEdit"
       on-click-move="handleClickMove" on-click-cancel="handleClickCancel" on-click-="handeCancelMove" on-click-cancel="handleClose"
       on-click-cancel-move-mode="handleClickCancelMove">
@@ -91,6 +91,7 @@
 
       handleClickEdit() {
         console.log('Edited', this.selectedItem)
+        this.set('addDialogOpen', true)
       }
 
       handleClickMove() {
