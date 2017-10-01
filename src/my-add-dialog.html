@@ -1,0 +1,76 @@
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+
+<dom-module id="my-add-dialog">
+    <template>
+
+        <style>
+             :host iron-input {
+                width: 100%;
+            }
+
+             :host iron-input input {
+                width: calc(100% - 16px);
+                margin-bottom: 16px;
+                padding: 8px;
+            }
+
+             :host iron-input textarea {
+                width: calc(100% - 16px);
+                resize: none;
+                border: 1px solid lightgray;
+                padding: 8px;
+                min-height: 48px;
+            }
+        </style>
+
+        <paper-dialog on-iron-overlay-closed="onClose" opened="[[open]]">
+            <h2>Add a new event</h2>
+
+            <iron-form id="event-form">
+                <form>
+                    <paper-input label="Title text" required auto-validate error-message="You need to add a title">
+                    </paper-input>
+                    <div class="buttons">
+                        <paper-button type="button" dialog-dismiss>Cancel</paper-button>
+                        <paper-button on-click="handleFormSubmit" type="submit" autofocus>Add</paper-button>
+                    </div>
+                </form>
+            </iron-form>
+
+
+        </paper-dialog>
+
+    </template>
+
+    <script>
+        class MyAddDialog extends Polymer.Element {
+            static get is() { return 'my-add-dialog'; }
+            static get properties() {
+                return {
+                    open: {
+                        type: Boolean,
+                        value: false
+                    },
+                    btnDisabled: {
+                        type: Boolean,
+                        value: false
+                    }
+                }
+            }
+
+            onClose(event) {
+                this.dispatchEvent(new CustomEvent('close'))
+            }
+
+            handleFormSubmit() {
+                console.log("add");
+                this.$['event-form'].submit();
+            }
+        }
+        window.customElements.define(MyAddDialog.is, MyAddDialog);
+    </script>
+
+</dom-module>

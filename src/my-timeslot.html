@@ -51,12 +51,12 @@
     <template is="dom-if" if="[[item.free]]">
       <template is="dom-if" if="[[isSelected]]">
         <div class="timeslot selected-timeslot" on-click="handleSelect">
-          [[item.description]]
+          [[item.title]]
         </div>
       </template>
       <template is="dom-if" if="[[!isSelected]]">
         <div class="timeslot free-timeslot" on-click="handleSelect">
-          [[item.description]]
+          [[item.title]]
         </div>
       </template>
     </template>
@@ -64,12 +64,12 @@
     <template is="dom-if" if="[[!item.free]]">
       <template is="dom-if" if="[[isSelected]]">
         <div class="timeslot selected-timeslot" on-click="handleSelect">
-          [[item.description]]
+          [[item.title]]
         </div>
       </template>
       <template is="dom-if" if="[[!isSelected]]">
         <div class="timeslot" on-click="handleSelect">
-          [[item.description]]
+          [[item.title]]
         </div>
       </template>
     </template>
