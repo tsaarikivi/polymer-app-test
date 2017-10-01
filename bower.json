@@ -1,8 +1,6 @@
 {
   "name": "polymer-starter-kit",
-  "authors": [
-    "The Polymer Authors"
-  ],
+  "authors": ["The Polymer Authors"],
   "license": "https://polymer.github.io/LICENSE.txt",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^2.0.2",
@@ -26,6 +24,7 @@
     "paper-number-input": "Zecat/paper-number-input#^1.0.0",
     "paper-fab-speed-dial": "Collaborne/paper-fab-speed-dial#^2.3.1",
     "paper-tooltip": "^2.0.1",
+    "paper-card": "PolymerElements/paper-card#^2.0.0",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "iron-input": "PolymerElements/iron-input#^2.0.1",
     "iron-form": "^2.0.1"
