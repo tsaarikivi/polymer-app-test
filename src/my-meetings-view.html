@@ -14,10 +14,11 @@
       }
     </style>
 
-    <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]">
+    <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" is-in-move-mode="[[isInMoveMode]]">
     </my-timetable>
     <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open="[[addDialogOpen]]" selected-item="[[selectedItem]]"></my-add-dialog>
-    <my-remove-popup on-close="handleCloseDialog" on-delete-item="handleDeleteItem" delete-item-popup-open="[[deleteItemPopupOpen]]"></my-remove-popup>
+    <my-remove-popup on-close="handleCloseDialog" on-delete-item="handleDeleteItem" delete-item-popup-open="[[deleteItemPopupOpen]]"
+      selected-item="[[selectedItem]]"></my-remove-popup>
     <my-dial selected-item="[[selectedItem]]" is-in-move-mode="[[isInMoveMode]]" on-click-add="handleClickAdd" on-click-edit="handleClickEdit"
       on-click-move="handleClickMove" on-click-delete="handleClickDelete" on-click-="handeCancelMove" on-click-cancel-move-mode="handleClickCancelMove">
   </template>

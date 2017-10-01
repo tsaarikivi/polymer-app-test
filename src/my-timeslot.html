@@ -84,16 +84,14 @@
       </template>
     </template>
 
-    <template is="dom-if" if="[[!showNotFree]]">
-      <template is="dom-if" if="[[!item.free]]">
-        <div class="timeslot hidden-slot">
-          Unavailable
-        </div>
-      </template>
+    <template is="dom-if" if="[[isUnavailable]]">
+      <div class="timeslot hidden-slot">
+        Unavailable
+      </div>
     </template>
 
     <paper-tooltip>
-      <p class="younameit">Table: [[item.tableNumber]]</p>
+      <p>Table: [[item.tableNumber]]</p>
       <p>Time: [[itemTimeString]]</p>
       <template is="dom-if" if="[[item.fromEntityData]]">
         <img class="tooltip-img" src="[[fromEntityImage]]">
@@ -113,11 +111,12 @@
 
       static get properties() {
         return {
-          item: {
-            type: Object
-          },
-          filter: {
-            type: String
+          isInMoveMode: Boolean,
+          item: Object,
+          filter: String,
+          isUnavailable: {
+            type: Boolean,
+            computed: '_computeIsUnavailable(item, isInMoveMode)'
           },
           showFree: {
             type: Boolean,
@@ -157,6 +156,10 @@
         }
       }
 
+      _computeIsUnavailable(item, isInMoveMode) {
+        return isInMoveMode && (!item || !item.free)
+      }
+
       _computeIsSelected(item, selectedItem) {
         if (selectedItem && item) {
           if (item.startTime === selectedItem.startTime) {
@@ -172,7 +175,7 @@
         return filter === 'FREE' || filter === 'ALL'
       }
       _computeFilterIsNotFree(filter) {
-        return filter === 'ALL'
+        return filter === 'NOTFREE' || filter === 'ALL'
       }
       _computeItemTimeString(item) {
         const start = new Date(item.startTime).toLocaleTimeString().substring(0, 5)

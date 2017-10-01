@@ -3,40 +3,49 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 <dom-module id="my-remove-popup">
-    <template>
+  <template>
+    <style>
+      paper-dialog {
+        width: 400px;
+      }
+    </style>
 
-        <paper-dialog on-iron-overlay-closed="onClose" opened="[[deleteItemPopupOpen]]">
+    <paper-dialog on-iron-overlay-closed="onClose" opened="[[deleteItemPopupOpen]]">
 
-            <h2>Are you sure?</h2>
-            <div class="buttons">
-                <paper-button type="button" dialog-dismiss>Cancel</paper-button>
-                <paper-button on-click="handleRemove" type="submit">Remove</paper-button>
-            </div>
+      <h2>Do you want to remove this item:</h2>
+      <template is="dom-if" if="[[selectedItem]]">
+        <div>
+          <p>[[selectedItem.title]]</p>
+        </div>
+      </template>
+      <div class="buttons">
+        <paper-button type="button" dialog-dismiss>Cancel</paper-button>
+        <paper-button on-click="handleRemove" type="submit" autofocus>Remove</paper-button>
+      </div>
 
-        </paper-dialog>
+    </paper-dialog>
 
-    </template>
+  </template>
 
-    <script>
-        class MyRemovePopup extends Polymer.Element {
-            static get is() { return 'my-remove-popup'; }
-            static get properties() {
-                return {
-                    deleteItemPopupOpen: {
-                        type: Boolean
-                    }
-                }
-            }
-            onClose(event) {
-                this.dispatchEvent(new CustomEvent('close'))
-            }
-
-            handleRemove() {
-                this.dispatchEvent(new CustomEvent("delete-item"))
-            }
+  <script>
+    class MyRemovePopup extends Polymer.Element {
+      static get is() { return 'my-remove-popup'; }
+      static get properties() {
+        return {
+          deleteItemPopupOpen: Boolean,
+          selectedItem: Object
         }
+      }
+      onClose(event) {
+        this.dispatchEvent(new CustomEvent('close'))
+      }
 
-        window.customElements.define(MyRemovePopup.is, MyRemovePopup);
-    </script>
+      handleRemove() {
+        this.dispatchEvent(new CustomEvent("delete-item"))
+      }
+    }
+
+    window.customElements.define(MyRemovePopup.is, MyRemovePopup);
+  </script>
 
 </dom-module>

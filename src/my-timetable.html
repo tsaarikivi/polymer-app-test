@@ -22,7 +22,7 @@
     <div class="columns-container">
       <my-tableside rows="250"></my-tableside>
       <template is="dom-repeat" items="[[items]]">
-        <my-timecolumn on-item-selected="handleSelect" items="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]"></my-timecolumn>
+        <my-timecolumn on-item-selected="handleSelect" items="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]" is-in-move-mode="[[isInMoveMode]]"></my-timecolumn>
       </template>
     </div>
 
@@ -34,15 +34,10 @@
 
       static get properties() {
         return {
-          items: {
-            type: Array
-          },
-          filter: {
-            type: String
-          },
-          selectedItem: {
-            type: Object
-          }
+          isInMoveMode: Boolean,
+          items: Array,
+          filter: String,
+          selectedItem: Object
         }
       }
 

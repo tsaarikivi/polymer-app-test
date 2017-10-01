@@ -25,7 +25,7 @@
 
     <div class="columntitle">[[columnTitle]]</div>
     <template is="dom-repeat" items="[[items]]">
-      <my-timeslot on-item-selected="handleSelect" item="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]"></my-timeslot>
+      <my-timeslot on-item-selected="handleSelect" item="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]" is-in-move-mode="[[isInMoveMode]]"></my-timeslot>
     </template>
 
   </template>
@@ -36,18 +36,13 @@
 
       static get properties() {
         return {
-          items: {
-            type: Array
-          },
-          filter: {
-            type: String
-          },
+          isInMoveMode: Boolean,
+          items: Array,
+          filter: String,
+          selectedItem: Object,
           columnTitle: {
             type: String,
             computed: '_computeColumnTitle(items)'
-          },
-          selectedItem: {
-            type: Object
           }
         }
       }
