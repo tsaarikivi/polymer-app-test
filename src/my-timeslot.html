@@ -30,8 +30,18 @@
         background-color: #80d8ff;
       }
 
+      paper-tooltip {
+        --paper-tooltip-background: white;
+        --paper-tooltip-opacity: 0.95;
+        --paper-tooltip-text-color: black;
+      }
+
+      paper-tooltip p {
+        font-size: 16px;
+      }
+
       .tooltip-img {
-        max-width: 64px;
+        width: 100%;
       }
     </style>
 
@@ -62,7 +72,7 @@
     </template>
 
     <paper-tooltip>
-      <p>Table: [[item.tableNumber]]</p>
+      <p class="younameit">Table: [[item.tableNumber]]</p>
       <p>Time: [[itemTimeString]]</p>
       <template is="dom-if" if="[[item.fromEntityData]]">
         <img class="tooltip-img" src="[[fromEntityImage]]">

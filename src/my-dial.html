@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
-
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-dial">
@@ -29,18 +28,18 @@
     </style>
 
     <template is="dom-if" if="[[selectedItem.free]]">
-      <paper-fab id="fab-add" icon="icons:add" on-click="handleAdd"></paper-fab>
+      <paper-fab id="fab-add" icon="my:add" on-click="handleAdd"></paper-fab>
       <paper-tooltip for="fab-add" position="top">Add new</paper-tooltip>
     </template>
 
     <template is="dom-if" if="[[!selectedItem.free]]">
-      <paper-fab id="fab-edit" icon="icons:assignment" on-click="handleEdit"></paper-fab>
+      <paper-fab id="fab-edit" icon="my:mode-edit" on-click="handleEdit"></paper-fab>
       <paper-tooltip for="fab-edit" position="top">Edit</paper-tooltip>
 
-      <paper-fab id="fab-move" icon="icons:redo" on-click="handleMove"></paper-fab>
+      <paper-fab id="fab-move" icon="my:redo" on-click="handleMove"></paper-fab>
       <paper-tooltip for="fab-move" position="top">Move</paper-tooltip>
 
-      <paper-fab id="fab-cancel" icon="icons:delete" on-click="handleCancel"></paper-fab>
+      <paper-fab id="fab-cancel" icon="my:delete" on-click="handleCancel"></paper-fab>
       <paper-tooltip for="fab-cancel" position="top">Cancel</paper-tooltip>
     </template>
   </template>
