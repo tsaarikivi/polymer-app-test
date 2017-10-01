@@ -9,6 +9,7 @@
         display: inline-block;
         vertical-align: top;
         width: 240px;
+        flex: 1 0 auto;
         height: 100%;
       }
 
@@ -24,7 +25,7 @@
 
     <div class="columntitle">[[columnTitle]]</div>
     <template is="dom-repeat" items="[[items]]">
-      <my-timeslot on-item-selected="handleSelect" item="[[item]]" selected-item="[[selectedItem]]"></my-timeslot>
+      <my-timeslot on-item-selected="handleSelect" item="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]"></my-timeslot>
     </template>
 
   </template>
@@ -37,6 +38,9 @@
         return {
           items: {
             type: Array
+          },
+          filter: {
+            type: String
           },
           columnTitle: {
             type: String,
