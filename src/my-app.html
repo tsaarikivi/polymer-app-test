@@ -22,12 +22,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+
 <link rel="lazy-import" href="my-icons.html">
 <link rel="lazy-import" href="my-meetings-view.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="my-app">
   <template>
+    <firebase-app auth-domain="slush-testing.firebaseapp.com" database-url="https://slush-testing.firebaseio.com/" api-key="AIzaSyBC2gyoqKhrG5EAltQ20rc394Uwcy9aYMc"
+      storage-bucket="slush-testing.appspot.com" messaging-sender-id="519161758698">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" status-known="{{statusKnown}}" provider="google" on-error="handleError">
+    </firebase-auth>
+
     <style>
        :host {
         --app-primary-color: #212121;
@@ -124,11 +133,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           routeData: Object,
           subroute: String,
           rootPath: String,
+          user: {
+            type: Object,
+            value: true
+          },
+          statusKnown: {
+            type: Boolean,
+            observer: '_statusKnownChanged'
+          }
         };
       }
 
       computePageTitle(titles, page) {
         return titles[page] || 'Hmmm'
+      }
+
+      computeLoggedIn(user, statusKnown) {
+        return this.user && this.statusKnown
       }
 
       static get observers() {
@@ -156,6 +177,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           null,
           this._showPage404.bind(this),
           true);
+      }
+
+      _statusKnownChanged(statusKnown) {
+        //this.$.auth.signOut();
+        if (statusKnown && !this.user) {
+          this.$.auth.signInWithPopup();
+        }
       }
 
       _showPage404() {
