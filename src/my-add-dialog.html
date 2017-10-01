@@ -43,15 +43,12 @@
             <h2>Set event</h2>
             <iron-form id="event-form">
                 <form>
-                    <iron-input bind-value={{title}}>
-                        <input id="titleInput" placeholder="Title" name="title" required>
-                        </input>
-                    </iron-input>
 
-                    <iron-input bind-value={{note}}>
-                        <input id="noteInput" placeholder="Note" name="note" required>
-                        </input>
-                    </iron-input>
+                    <paper-input id="titleInput" placeholder="Title" name="title" required value="{{title}}">
+                    </paper-input>
+
+                    <paper-input id="noteInput" placeholder="Note" name="note" value="{{note}}">
+                    </paper-input>
 
                     <div class="buttons">
                         <paper-button type="button" dialog-dismiss>Cancel</paper-button>
@@ -91,20 +88,17 @@
             }
 
             _computeTitle(item) {
-                console.log(item.title);
-                return (!item.free && item.title) ? item.title : "";
+                return (item && !item.free && item.title) ? item.title : "";
             }
 
             _computeNote(item) {
-                return (!item.free && item.note) ? item.note : "";
+                return (item && !item.free && item.note) ? item.note : "";
             }
 
             handleFormSubmit() {
-
                 if (this.title === "" || this.title === undefined) {
                     this.$["titleInput"].className = "error-input"
-                }
-                else {
+                } else {
                     this.dispatchEvent(new CustomEvent("add", { detail: { title: this.title, note: this.note } }))
                     this.set("title", "");
                     this.set("note", "");
