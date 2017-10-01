@@ -15,31 +15,51 @@
                 width: calc(100% - 16px);
                 margin-bottom: 16px;
                 padding: 8px;
+                border: 0;
+                border-bottom: 1px solid grey;
             }
 
              :host iron-input textarea {
                 width: calc(100% - 16px);
                 resize: none;
-                border: 1px solid lightgray;
+                border: 0;
+                border-bottom: 1px solid grey;
                 padding: 8px;
-                min-height: 48px;
+            }
+
+             :host iron-input textarea:focus,
+             :host iron-input input:focus {
+                outline: 0;
+                border-bottom: 2px solid black;
+            }
+
+            .error-input {
+                color: red;
+                border-bottom: 2px solid #E31616;
             }
         </style>
 
         <paper-dialog on-iron-overlay-closed="onClose" opened="[[open]]">
-            <h2>Add a new event</h2>
 
+            <h2>Add a new event</h2>
             <iron-form id="event-form">
                 <form>
-                    <paper-input label="Title text" required auto-validate error-message="You need to add a title">
-                    </paper-input>
+                    <iron-input bind-value={{title}}>
+                        <input id="titleInput" placeholder="Title" name="title" required>
+                        </input>
+                    </iron-input>
+
+                    <iron-input bind-value={{note}}>
+                        <input id="noteInput" placeholder="Note" name="note" required>
+                        </input>
+                    </iron-input>
+
                     <div class="buttons">
                         <paper-button type="button" dialog-dismiss>Cancel</paper-button>
                         <paper-button on-click="handleFormSubmit" type="submit" autofocus>Add</paper-button>
                     </div>
                 </form>
             </iron-form>
-
 
         </paper-dialog>
 
@@ -51,12 +71,13 @@
             static get properties() {
                 return {
                     open: {
-                        type: Boolean,
-                        value: false
+                        type: Boolean
                     },
-                    btnDisabled: {
-                        type: Boolean,
-                        value: false
+                    title: {
+                        type: String
+                    },
+                    note: {
+                        type: String
                     }
                 }
             }
@@ -66,8 +87,14 @@
             }
 
             handleFormSubmit() {
-                console.log("add");
-                this.$['event-form'].submit();
+
+                if (this.title === "" || this.title === undefined) {
+                    this.$["titleInput"].className = "error-input"
+                }
+                else {
+                    this.dispatchEvent(new CustomEvent("add", { detail: { title: this.title, note: this.note } }))
+                }
+
             }
         }
         window.customElements.define(MyAddDialog.is, MyAddDialog);

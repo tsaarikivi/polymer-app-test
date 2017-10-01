@@ -15,10 +15,10 @@
 
     <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]">
     </my-timetable>
+    <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open="[[addDialogOpen]]"></my-add-dialog>
     <my-dial selected-item="[[selectedItem]]" is-in-move-mode="[[isInMoveMode]]" on-click-add="handleClickAdd" on-click-edit="handleClickEdit"
       on-click-move="handleClickMove" on-click-cancel="handleClickCancel" on-click-="handeCancelMove" on-click-cancel="handleClose"
       on-click-cancel-move-mode="handleClickCancelMove">
-      <my-add-dialog on-close="onCloseDialog" open=[[addDialogOpen]]></my-add-dialog>
   </template>
 
   <script>
@@ -86,6 +86,7 @@
 
       handleClickAdd() {
         console.log('Added', this.selectedItem)
+        this.set('addDialogOpen', true)
       }
 
       handleClickEdit() {
@@ -106,7 +107,12 @@
         console.log('Canceled', this.selectedItem)
       }
 
-      onCloseDialog() {
+      handleAddDialog(event) {
+        console.log("add dialog sent an event! ", event.detail.title, event.detail.note)
+        this.set('addDialogOpen', false)
+      }
+
+      handleCloseDialog() {
         this.set('addDialogOpen', false)
       }
     }
