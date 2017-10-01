@@ -1,0 +1,122 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-fab-speed-dial/paper-fab-speed-dial.html">
+<link rel="import" href="../bower_components/paper-fab-speed-dial/paper-fab-speed-dial-action.html">
+<link rel="import" href="my-timetable.html">
+<link rel="import" href="my-dial.html">
+<link rel="import" href="my-add-dialog.html">
+
+<dom-module id="my-meetings-view">
+  <template>
+    <style>
+       :host {
+        position: relative;
+      }
+    </style>
+
+    <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]">
+    </my-timetable>
+    <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open="[[addDialogOpen]]"></my-add-dialog>
+    <my-dial selected-item="[[selectedItem]]" is-in-move-mode="[[isInMoveMode]]" on-click-add="handleClickAdd" on-click-edit="handleClickEdit"
+      on-click-move="handleClickMove" on-click-cancel="handleClickCancel" on-click-="handeCancelMove" on-click-cancel="handleClose"
+      on-click-cancel-move-mode="handleClickCancelMove">
+  </template>
+
+  <script>
+    class MyMeetingsView extends Polymer.Element {
+      static get is() { return 'my-meetings-view'; }
+
+      static get properties() {
+        return {
+          selectedItem: {
+            type: Object
+          },
+          filter: {
+            type: String,
+            value: "ALL"
+          },
+          isInMoveMode: {
+            type: Boolean,
+            value: false
+          },
+          addDialogOpen: {
+            type: Boolean,
+            value: false
+          },
+          items: {
+            type: Array,
+            value: [
+              [
+                { startTime: 10293809296, endTime: 10293809291, tableNumber: 4, description: 'Free', free: true },
+              ], [
+                { startTime: 5238957239, endTime: 10293809285, tableNumber: 1, description: 'Olli and Tero', fromEntityData: { imageURL: 'https://png.icons8.com/people/ultraviolet/100', title: 'Ultra Violet' }, toEntityData: { title: 'SKAIP!', imageURL: 'https://lh3.googleusercontent.com/QfAEt_ya6-n8w_TD9-PsghFC2DMSO7fLGNZB4cQ3RtbBbHFkXJE_gxOc3l32-j6LXg=w300' } },
+                { startTime: 10293809286, endTime: 10293809287, tableNumber: 2, description: 'Olli and Tero' },
+                { startTime: 4389793477, endTime: 10293809289, tableNumber: 3, description: 'Free', free: true },
+                { startTime: 10293809290, endTime: 10293809291, tableNumber: 4, description: 'Free', free: true },
+              ], [
+                { startTime: 5238957239, endTime: 10293809285, tableNumber: 1, description: 'Olli and Tero', fromEntityData: { imageURL: 'https://png.icons8.com/people/ultraviolet/100', title: 'Ultra Violet' }, toEntityData: { title: 'SKAIP!', imageURL: 'https://lh3.googleusercontent.com/QfAEt_ya6-n8w_TD9-PsghFC2DMSO7fLGNZB4cQ3RtbBbHFkXJE_gxOc3l32-j6LXg=w300' } },
+                { startTime: 10293809287, endTime: 10293809287, tableNumber: 2, description: 'Olli and Tero' },
+                { startTime: 4389793479, endTime: 10293809289, tableNumber: 3, description: 'Free', free: true },
+                { startTime: 102938092954, endTime: 10293809291, tableNumber: 4, description: 'Free', free: true },
+              ]
+            ]
+          }
+        }
+      }
+
+      setSelectedItem(e) {
+        if (this.isInMoveMode) {
+          const oldItem = this.selectedItem
+          const newItem = e.detail
+          this.handleMove(oldItem, newItem)
+        } else {
+          this.set('selectedItem', e.detail)
+        }
+      }
+
+      handleMove(oldItem, newItem) {
+        // todo handle ajax
+        return Promise.resolve()
+          .then(() => {
+            console.log("Moved")
+            this.set('selectedItem', newItem)
+            this.handleClickCancelMove()
+          })
+          .catch(err => console.error(err))
+      }
+
+      handleClickAdd() {
+        console.log('Added', this.selectedItem)
+        this.set('addDialogOpen', true)
+      }
+
+      handleClickEdit() {
+        console.log('Edited', this.selectedItem)
+      }
+
+      handleClickMove() {
+        this.set('filter', "FREE")
+        this.set('isInMoveMode', true)
+      }
+
+      handleClickCancelMove() {
+        this.set('filter', "ALL")
+        this.set('isInMoveMode', false)
+      }
+
+      handleClickCancel() {
+        console.log('Canceled', this.selectedItem)
+      }
+
+      handleAddDialog(event) {
+        console.log("add dialog sent an event! ", event.detail.title, event.detail.note)
+        this.set('addDialogOpen', false)
+      }
+
+      handleCloseDialog() {
+        this.set('addDialogOpen', false)
+      }
+    }
+
+    window.customElements.define(MyMeetingsView.is, MyMeetingsView);
+  </script>
+</dom-module>
