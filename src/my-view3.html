@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-fab-speed-dial/paper-fab-speed-dial-action.html">
 <link rel="import" href="my-timetable.html">
 <link rel="import" href="my-dial.html">
+<link rel="import" href="my-add-dialog.html">
 
 <dom-module id="my-view3">
   <template>
@@ -12,11 +13,12 @@
       }
     </style>
 
-    <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]"></my-timetable>
+    <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem" filter="[[filter]]" filter="[[filter]]">
+    </my-timetable>
     <my-dial selected-item="[[selectedItem]]" is-in-move-mode="[[isInMoveMode]]" on-click-add="handleClickAdd" on-click-edit="handleClickEdit"
       on-click-move="handleClickMove" on-click-cancel="handleClickCancel" on-click-="handeCancelMove" on-click-cancel="handleClose"
       on-click-cancel-move-mode="handleClickCancelMove">
-    </my-dial>
+      <my-add-dialog on-close="onCloseDialog" open=[[addDialogOpen]]></my-add-dialog>
   </template>
 
   <script>
@@ -33,6 +35,10 @@
             value: "ALL"
           },
           isInMoveMode: {
+            type: Boolean,
+            value: false
+          },
+          addDialogOpen: {
             type: Boolean,
             value: false
           },
@@ -98,6 +104,10 @@
 
       handleClickCancel() {
         console.log('Canceled', this.selectedItem)
+      }
+
+      onCloseDialog() {
+        this.set('addDialogOpen', false)
       }
     }
 
