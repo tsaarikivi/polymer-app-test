@@ -22,7 +22,7 @@
     <div class="columns-container">
       <my-tableside rows="250"></my-tableside>
       <template is="dom-repeat" items="[[items]]">
-        <my-timecolumn on-item-selected="handleSelect" items="[[item]]" selected-item="[[selectedItem]]"></my-timecolumn>
+        <my-timecolumn on-item-selected="handleSelect" items="[[item]]" selected-item="[[selectedItem]]" filter="[[filter]]"></my-timecolumn>
       </template>
     </div>
 
@@ -36,6 +36,9 @@
         return {
           items: {
             type: Array
+          },
+          filter: {
+            type: String
           },
           selectedItem: {
             type: Object

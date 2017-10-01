@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 
 <dom-module id="my-timeslot">
@@ -17,7 +16,7 @@
         background-color: #FAFAFA;
       }
 
-      .timeslot:hover {
+      .hoverable-slot:hover {
         background-color: #ea80fc;
         cursor: pointer;
       }
@@ -28,6 +27,13 @@
 
       .selected-timeslot {
         background-color: #80d8ff;
+      }
+
+      .hidden-slot {
+        background-color: #616161;
+        color: #ddd;
+        user-select: none;
+        cursor: default;
       }
 
       paper-tooltip {
@@ -48,28 +54,40 @@
       }
     </style>
 
-    <template is="dom-if" if="[[item.free]]">
-      <template is="dom-if" if="[[isSelected]]">
-        <div class="timeslot selected-timeslot" on-click="handleSelect">
-          [[item.description]]
-        </div>
-      </template>
-      <template is="dom-if" if="[[!isSelected]]">
-        <div class="timeslot free-timeslot" on-click="handleSelect">
-          [[item.description]]
-        </div>
+    <template is="dom-if" if="[[showFree]]">
+      <template is="dom-if" if="[[item.free]]">
+        <template is="dom-if" if="[[isSelected]]">
+          <div class="timeslot hoverable-slot selected-timeslot" on-click="handleSelect">
+            [[item.description]]
+          </div>
+        </template>
+        <template is="dom-if" if="[[!isSelected]]">
+          <div class="timeslot hoverable-slot free-timeslot" on-click="handleSelect">
+            [[item.description]]
+          </div>
+        </template>
       </template>
     </template>
 
-    <template is="dom-if" if="[[!item.free]]">
-      <template is="dom-if" if="[[isSelected]]">
-        <div class="timeslot selected-timeslot" on-click="handleSelect">
-          [[item.description]]
-        </div>
+    <template is="dom-if" if="[[showNotFree]]">
+      <template is="dom-if" if="[[!item.free]]">
+        <template is="dom-if" if="[[isSelected]]">
+          <div class="timeslot hoverable-slot selected-timeslot" on-click="handleSelect">
+            [[item.description]]
+          </div>
+        </template>
+        <template is="dom-if" if="[[!isSelected]]">
+          <div class="timeslot hoverable-slot" on-click="handleSelect">
+            [[item.description]]
+          </div>
+        </template>
       </template>
-      <template is="dom-if" if="[[!isSelected]]">
-        <div class="timeslot" on-click="handleSelect">
-          [[item.description]]
+    </template>
+
+    <template is="dom-if" if="[[!showNotFree]]">
+      <template is="dom-if" if="[[!item.free]]">
+        <div class="timeslot hidden-slot">
+          Unavailable
         </div>
       </template>
     </template>
@@ -97,6 +115,17 @@
         return {
           item: {
             type: Object
+          },
+          filter: {
+            type: String
+          },
+          showFree: {
+            type: Boolean,
+            computed: '_computeFilterIsFree(filter)'
+          },
+          showNotFree: {
+            type: Boolean,
+            computed: '_computeFilterIsNotFree(filter)'
           },
           selectedItem: {
             type: Object
@@ -139,6 +168,12 @@
         return false
       }
 
+      _computeFilterIsFree(filter) {
+        return filter === 'FREE' || filter === 'ALL'
+      }
+      _computeFilterIsNotFree(filter) {
+        return filter === 'ALL'
+      }
       _computeItemTimeString(item) {
         const start = new Date(item.startTime).toLocaleTimeString().substring(0, 5)
         const end = new Date(item.endTime).toLocaleTimeString().substring(0, 5)
