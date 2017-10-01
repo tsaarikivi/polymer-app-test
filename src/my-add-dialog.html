@@ -19,13 +19,13 @@
       <h2>Create new</h2>
 
       <form>
-        <paper-input label="Title" error-message="This field is required" required auto-validate value="{{title}}"></paper-input>
+        <paper-input label="Title" error-message="This field is required" autofocus required auto-validate value="{{title}}"></paper-input>
         <paper-textarea rows="3" max-rows="3" label="Note" value="{{note}}"></paper-textarea>
       </form>
 
       <div class="buttons">
         <paper-button type="button" dialog-dismiss>Cancel</paper-button>
-        <paper-button on-click="handleFormSubmit" type="submit" autofocus>Add</paper-button>
+        <paper-button on-click="handleFormSubmit" type="submit">Add</paper-button>
       </div>
 
     </paper-dialog>
