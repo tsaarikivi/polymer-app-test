@@ -69,41 +69,34 @@
             static get is() { return 'my-add-dialog'; }
             static get properties() {
                 return {
-                    item: {
-                        type: Object,
-                        observer: 'handleItem'
+                    selectedItem: {
+                        type: Object
                     },
                     open: {
                         type: Boolean,
                     },
                     title: {
-                        type: String
+                        type: String,
+                        computed: "_computeTitle(selectedItem)"
                     },
                     note: {
-                        type: String
+                        type: String,
+                        computed: "_computeNote(selectedItem)"
                     }
                 }
-            }
-
-            constructor() {
-                super();
-
             }
 
             onClose(event) {
                 this.dispatchEvent(new CustomEvent('close'))
             }
 
-            handleItem() {
-                // Check if there is already an event
-                console.log("handling item", item)
-                if (typeof item !== "undefined") {
-                    //if (this.open) {
-                    console.log("has event");
-                    this.title = (item.title !== "") ? item.title : "";
-                    this.note = (item.note !== "") ? item.note : "";
-                    //}
-                }
+            _computeTitle(item) {
+                console.log(item.title);
+                return (!item.free && item.title) ? item.title : "";
+            }
+
+            _computeNote(item) {
+                return (!item.free && item.note) ? item.note : "";
             }
 
             handleFormSubmit() {
