@@ -1,23 +1,78 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 
 <dom-module id="my-timeslot">
 
   <template>
     <style>
-      paper-card {
-        margin: 2px;
+      .timeslot {
         display: block;
+        margin: 2px;
         font-size: 12px;
         padding: 8px;
         height: 34px;
         box-sizing: border-box;
+        border-radius: 2px;
+        background-color: #FAFAFA;
+      }
+
+      .timeslot:hover {
+        background-color: #ea80fc;
+        cursor: pointer;
+      }
+
+      .free-timeslot {
+        background-color: #ccff90;
+      }
+
+      .selected-timeslot {
+        background-color: #80d8ff;
+      }
+
+      .tooltip-img {
+        max-width: 64px;
       }
     </style>
 
-    <paper-card on-click="handleSelect">
-      [[item.description]]
-    </paper-card>
+    <template is="dom-if" if="[[item.free]]">
+      <template is="dom-if" if="[[isSelected]]">
+        <div class="timeslot selected-timeslot" on-click="handleSelect">
+          [[item.description]]
+        </div>
+      </template>
+      <template is="dom-if" if="[[!isSelected]]">
+        <div class="timeslot free-timeslot" on-click="handleSelect">
+          [[item.description]]
+        </div>
+      </template>
+    </template>
+
+    <template is="dom-if" if="[[!item.free]]">
+      <template is="dom-if" if="[[isSelected]]">
+        <div class="timeslot selected-timeslot" on-click="handleSelect">
+          [[item.description]]
+        </div>
+      </template>
+      <template is="dom-if" if="[[!isSelected]]">
+        <div class="timeslot" on-click="handleSelect">
+          [[item.description]]
+        </div>
+      </template>
+    </template>
+
+    <paper-tooltip>
+      <p>Table: [[item.tableNumber]]</p>
+      <p>Time: [[itemTimeString]]</p>
+      <template is="dom-if" if="[[item.fromEntityData]]">
+        <img class="tooltip-img" src="[[fromEntityImage]]">
+        <p>[[fromEntityTitle]]</p>
+      </template>
+      <template is="dom-if" if="[[item.toEntityData]]">
+        <img class="tooltip-img" src="[[toEntityImage]]">
+        <p>[[toEntityTitle]]</p>
+      </template>
+    </paper-tooltip>
 
   </template>
 
@@ -29,12 +84,76 @@
         return {
           item: {
             type: Object
+          },
+          selectedItem: {
+            type: Object
+          },
+          isSelected: {
+            type: Boolean,
+            computed: '_computeIsSelected(item, selectedItem)'
+          },
+          itemTimeString: {
+            type: String,
+            computed: '_computeItemTimeString(item)'
+          },
+          toEntityImage: {
+            type: String,
+            computed: '_computeToEntityImage(item)'
+          },
+          fromEntityImage: {
+            type: String,
+            computed: '_computeFromEntityImage(item)'
+          },
+          toEntityTitle: {
+            type: String,
+            computed: '_computeToEntityTitle(item)'
+          },
+          fromEntityTitle: {
+            type: String,
+            computed: '_computeFromEntityTitle(item)'
           }
         }
       }
 
+      _computeIsSelected(item, selectedItem) {
+        if (selectedItem && item) {
+          if (item.startTime === selectedItem.startTime) {
+            if (item.tableNumber === selectedItem.tableNumber) {
+              return true
+            }
+          }
+        }
+        return false
+      }
+
+      _computeItemTimeString(item) {
+        const start = new Date(item.startTime).toLocaleTimeString().substring(0, 5)
+        const end = new Date(item.endTime).toLocaleTimeString().substring(0, 5)
+        return `${start} - ${end}`
+      }
+
+      _computeToEntityImage({ toEntityData }) {
+        if (!toEntityData) return null
+        return toEntityData.imageURL
+      }
+
+      _computeFromEntityImage({ fromEntityData }) {
+        if (!fromEntityData) return null
+        return fromEntityData.imageURL
+      }
+
+      _computeToEntityTitle({ toEntityData }) {
+        if (!toEntityData) return null
+        return toEntityData.title
+      }
+
+      _computeFromEntityTitle({ fromEntityData }) {
+        if (!fromEntityData) return null
+        return fromEntityData.title
+      }
+
       handleSelect() {
-        this.dispatchEvent(new CustomEvent('slot-selected', {
+        this.dispatchEvent(new CustomEvent('item-selected', {
           detail: this.item
         }))
       }

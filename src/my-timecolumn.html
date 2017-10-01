@@ -10,12 +10,21 @@
         vertical-align: top;
         width: 240px;
         height: 100%;
-        margin-top: 4px;
+      }
+
+      .columntitle {
+        color: #FAFAFA;
+        height: 50px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 16px;
+        padding: 13px 0;
       }
     </style>
 
+    <div class="columntitle">[[columnTitle]]</div>
     <template is="dom-repeat" items="[[items]]">
-      <my-timeslot on-slot-selected="handleSelect" item="[[item]]"></my-timeslot>
+      <my-timeslot on-item-selected="handleSelect" item="[[item]]" selected-item="[[selectedItem]]"></my-timeslot>
     </template>
 
   </template>
@@ -28,12 +37,25 @@
         return {
           items: {
             type: Array
+          },
+          columnTitle: {
+            type: String,
+            computed: '_computeColumnTitle(items)'
+          },
+          selectedItem: {
+            type: Object
           }
         }
       }
 
+      _computeColumnTitle([firstItem]) {
+        const start = new Date(firstItem.startTime).toLocaleTimeString().substring(0, 5)
+        const end = new Date(firstItem.endTime).toLocaleTimeString().substring(0, 5)
+        return `${start} - ${end}`
+      }
+
       handleSelect(e) {
-        this.dispatchEvent(new CustomEvent('slot-selected', { detail: e.detail }))
+        this.dispatchEvent(new CustomEvent('item-selected', { detail: e.detail }))
       }
     }
 
