@@ -21,26 +21,33 @@
         color: black;
       }
 
-      #fab-cancel {
+      .fab-cancel {
         background-color: #ff1744;
         color: white;
       }
     </style>
 
-    <template is="dom-if" if="[[selectedItem.free]]">
-      <paper-fab id="fab-add" icon="my:add" on-click="handleAdd"></paper-fab>
-      <paper-tooltip for="fab-add" position="top">Add new</paper-tooltip>
+    <template is="dom-if" if="[[!isInMoveMode]]">
+      <template is="dom-if" if="[[selectedItem.free]]">
+        <paper-fab id="fab-add" icon="my:add" on-click="handleClickAdd"></paper-fab>
+        <paper-tooltip for="fab-add" position="top">Add new</paper-tooltip>
+      </template>
+
+      <template is="dom-if" if="[[!selectedItem.free]]">
+        <paper-fab id="fab-edit" icon="my:mode-edit" on-click="handleClickEdit"></paper-fab>
+        <paper-tooltip for="fab-edit" position="top">Edit</paper-tooltip>
+
+        <paper-fab id="fab-move" icon="my:redo" on-click="handleClickMove"></paper-fab>
+        <paper-tooltip for="fab-move" position="top">Move</paper-tooltip>
+
+        <paper-fab id="fab-cancel" class="fab-cancel" icon="my:delete" on-click="handleClickCancel"></paper-fab>
+        <paper-tooltip for="fab-cancel" position="top">Delete</paper-tooltip>
+      </template>
     </template>
 
-    <template is="dom-if" if="[[!selectedItem.free]]">
-      <paper-fab id="fab-edit" icon="my:mode-edit" on-click="handleEdit"></paper-fab>
-      <paper-tooltip for="fab-edit" position="top">Edit</paper-tooltip>
-
-      <paper-fab id="fab-move" icon="my:redo" on-click="handleMove"></paper-fab>
-      <paper-tooltip for="fab-move" position="top">Move</paper-tooltip>
-
-      <paper-fab id="fab-cancel" icon="my:delete" on-click="handleCancel"></paper-fab>
-      <paper-tooltip for="fab-cancel" position="top">Cancel</paper-tooltip>
+    <template is="dom-if" if="[[isInMoveMode]]">
+      <paper-fab id="fab-close" class="fab-cancel" icon="my:close" on-click="handleClickCancelMove"></paper-fab>
+      <paper-tooltip for="fab-close" position="top">Cancel</paper-tooltip>
     </template>
   </template>
 
@@ -52,24 +59,31 @@
         return {
           selectedItem: {
             type: Object
+          },
+          isInMoveMode: {
+            type: Boolean
           }
         }
       }
 
-      handleAdd() {
+      handleClickAdd() {
         this.dispatchEvent(new CustomEvent('click-add'))
       }
 
-      handleEdit() {
+      handleClickEdit() {
         this.dispatchEvent(new CustomEvent('click-edit'))
       }
 
-      handleMove() {
+      handleClickMove() {
         this.dispatchEvent(new CustomEvent('click-move'))
       }
 
-      handleCancel() {
+      handleClickCancel() {
         this.dispatchEvent(new CustomEvent('click-cancel'))
+      }
+
+      handleClickCancelMove() {
+        this.dispatchEvent(new CustomEvent('click-cancel-move-mode'))
       }
     }
 
