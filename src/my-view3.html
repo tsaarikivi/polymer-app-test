@@ -14,7 +14,7 @@
     </style>
 
     <my-timetable selected-item="[[selectedItem]]" items="[[items]]" on-item-selected="setSelectedItem"></my-timetable>
-    <my-add-dialog on-close="onCloseDialog" open=[[addDialogOpen]]></my-add-dialog>
+    <my-add-dialog on-close="handleCloseDialog" on-add="handleAddDialog" open=[[addDialogOpen]]></my-add-dialog>
     <my-dial selected-item="[[selectedItem]]" on-click-add="handleAdd" on-click-edit="handleEdit" on-click-move="handleMove"
       on-click-cancel="handleCancel">
     </my-dial>
@@ -98,7 +98,12 @@
         console.log('Canceled', this.selectedItem)
       }
 
-      onCloseDialog() {
+      handleAddDialog(event) {
+        console.log("add dialog sent an event! ", event.detail.title, event.detail.note)
+        this.set('addDialogOpen', false)
+      }
+
+      handleCloseDialog() {
         this.set('addDialogOpen', false)
       }
     }
