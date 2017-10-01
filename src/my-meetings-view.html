@@ -5,7 +5,7 @@
 <link rel="import" href="my-dial.html">
 <link rel="import" href="my-add-dialog.html">
 
-<dom-module id="my-view3">
+<dom-module id="my-meetings-view">
   <template>
     <style>
        :host {
@@ -22,8 +22,8 @@
   </template>
 
   <script>
-    class MyView3 extends Polymer.Element {
-      static get is() { return 'my-view3'; }
+    class MyMeetingsView extends Polymer.Element {
+      static get is() { return 'my-meetings-view'; }
 
       static get properties() {
         return {
@@ -118,6 +118,6 @@
       }
     }
 
-    window.customElements.define(MyView3.is, MyView3);
+    window.customElements.define(MyMeetingsView.is, MyMeetingsView);
   </script>
 </dom-module>
