@@ -16,16 +16,16 @@
 
     <paper-dialog on-iron-overlay-closed="onClose" opened="[[open]]">
 
-      <h2>Create new</h2>
+      <h2>Item</h2>
 
       <form>
-        <paper-input label="Title" error-message="This field is required" autofocus required auto-validate value="{{title}}"></paper-input>
-        <paper-textarea rows="3" max-rows="3" label="Note" value="{{note}}"></paper-textarea>
+        <paper-input always-float-label label="Title" error-message="This field is required" autofocus required auto-validate value="{{title}}"></paper-input>
+        <paper-textarea always-float-label rows="3" max-rows="3" label="Note" value="{{note}}"></paper-textarea>
       </form>
 
       <div class="buttons">
         <paper-button type="button" dialog-dismiss>Cancel</paper-button>
-        <paper-button on-click="handleFormSubmit" type="submit">Add</paper-button>
+        <paper-button on-click="handleFormSubmit" type="submit">Submit</paper-button>
       </div>
 
     </paper-dialog>
@@ -37,18 +37,16 @@
       static get is() { return 'my-add-dialog'; }
       static get properties() {
         return {
-          selectedItem: {
-            type: Object
-          },
-          open: {
-            type: Boolean,
-          },
+          selectedItem: Object,
+          open: Boolean,
           title: {
-            type: String
+            type: String,
+            computed: '_computeTitle(selectedItem)'
           },
           note: {
-            type: String
-          }
+            type: String,
+            computed: '_computeNote(selectedItem)'
+          },
         }
       }
 
@@ -56,12 +54,12 @@
         this.dispatchEvent(new CustomEvent('close'))
       }
 
-      _computeTitle(item) {
-        return (item && !item.free && item.title) ? item.title : "";
+      _computeTitle(selectedItem) {
+        return (selectedItem && !selectedItem.free && selectedItem.title) ? selectedItem.title : "";
       }
 
-      _computeNote(item) {
-        return (item && !item.free && item.note) ? item.note : "";
+      _computeNote(selectedItem) {
+        return (selectedItem && !selectedItem.free && selectedItem.note) ? selectedItem.note : "";
       }
 
       handleFormSubmit() {

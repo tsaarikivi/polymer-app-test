@@ -182,7 +182,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _statusKnownChanged(statusKnown) {
         //this.$.auth.signOut();
         if (statusKnown && !this.user) {
-          this.$.auth.signInWithPopup();
+          this.$.auth.signInWithRedirect();
         }
       }
 
